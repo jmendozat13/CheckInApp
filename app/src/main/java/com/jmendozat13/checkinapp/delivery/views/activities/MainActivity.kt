@@ -1,4 +1,4 @@
-package com.jmendozat13.checkinapp
+package com.jmendozat13.checkinapp.delivery.views.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,12 +11,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.jmendozat13.checkinapp.ui.theme.CheckInAppTheme
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.jmendozat13.checkinapp.delivery.theme.CheckInAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        installSplashScreen()
         setContent {
             CheckInAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->

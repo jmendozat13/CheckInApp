@@ -1,4 +1,4 @@
-package com.jmendozat13.checkinapp.ui.theme
+package com.jmendozat13.checkinapp.delivery.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

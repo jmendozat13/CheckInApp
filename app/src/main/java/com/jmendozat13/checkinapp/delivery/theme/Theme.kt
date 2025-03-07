@@ -1,6 +1,5 @@
-package com.jmendozat13.checkinapp.ui.theme
+package com.jmendozat13.checkinapp.delivery.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
