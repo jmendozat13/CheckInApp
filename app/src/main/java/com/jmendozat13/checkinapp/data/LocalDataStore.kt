@@ -11,9 +11,11 @@ class LocalDataStore @Inject constructor(private val dataStore: DataStore<Prefer
 
     companion object {
         const val PREFERENCES_SHOW_ONBOARDING_CODE = "show_onboarding"
+        const val PREFERENCES_USER_LOGIN_CODE = "user_login"
     }
 
     private val showOnboarding = booleanPreferencesKey(PREFERENCES_SHOW_ONBOARDING_CODE)
+    private val userLogin = booleanPreferencesKey(PREFERENCES_USER_LOGIN_CODE)
 
     suspend fun getIsShowOnboarding(): Boolean {
         return dataStore.data.first()[showOnboarding] ?: false
@@ -23,7 +25,16 @@ class LocalDataStore @Inject constructor(private val dataStore: DataStore<Prefer
         dataStore.edit { preferences ->
             preferences[showOnboarding] = true
         }
+    }
 
+    suspend fun getIsUserLogin(): Boolean {
+        return dataStore.data.first()[userLogin] ?: false
+    }
+
+    suspend fun setUserLogin() {
+        dataStore.edit { preferences ->
+            preferences[userLogin] = true
+        }
     }
 
 

@@ -11,6 +11,7 @@ import com.jmendozat13.checkinapp.delivery.views.screens.HomeScreen
 import com.jmendozat13.checkinapp.delivery.views.screens.LoadingScreen
 import com.jmendozat13.checkinapp.delivery.views.screens.LoginScreen
 import com.jmendozat13.checkinapp.delivery.views.screens.OnboardingScreen
+import com.jmendozat13.checkinapp.delivery.views.screens.ResetIdentifierScreen
 import com.jmendozat13.checkinapp.delivery.views.screens.SignupScreen
 
 @Composable
@@ -23,7 +24,7 @@ fun NavigationWrapper(
     NavHost(navController = navController, startDestination = startDestinationState) {
         composable<OnboardingScreenGraphScreen> {
             OnboardingScreen(navigateTo = {
-                orchestratorViewModel.showOnboarding()
+                orchestratorViewModel.onShowOnboarding()
                 navController.navigate(it) {
                     popUpTo<OnboardingScreenGraphScreen> { inclusive = true }
                 }
@@ -33,11 +34,13 @@ fun NavigationWrapper(
         composable<LoginScreenGraphScreen> {
             LoginScreen {
                 navController.navigate(HomeScreenGraphScreen) {
+                    orchestratorViewModel.onUserLogin()
                     popUpTo<LoginScreenGraphScreen> { inclusive = true }
                     launchSingleTop = true
                 }
             }
         }
+
         composable<SignupScreenGraphScreen> {
             SignupScreen {
                 navController.navigate(HomeScreenGraphScreen) {
@@ -51,6 +54,9 @@ fun NavigationWrapper(
         }
         composable<LoadingScreenGraphScreen> {
             LoadingScreen()
+        }
+        composable<ResetIdentifierGraphScreen> {
+            ResetIdentifierScreen()
         }
     }
 }

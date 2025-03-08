@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.core.splashscreen)
+    implementation (libs.google.accompanist.insets)
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
@@ -70,6 +71,8 @@ dependencies {
     // DataStore
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.datastore.preferences.core)
+
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
