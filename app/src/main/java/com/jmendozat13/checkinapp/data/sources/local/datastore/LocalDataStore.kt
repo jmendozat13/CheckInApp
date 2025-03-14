@@ -1,4 +1,4 @@
-package com.jmendozat13.checkinapp.data
+package com.jmendozat13.checkinapp.data.sources.local.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

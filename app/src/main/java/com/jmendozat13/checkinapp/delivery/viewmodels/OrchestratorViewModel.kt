@@ -2,7 +2,7 @@ package com.jmendozat13.checkinapp.delivery.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jmendozat13.checkinapp.data.LocalDataStore
+import com.jmendozat13.checkinapp.data.sources.local.datastore.LocalDataStore
 import com.jmendozat13.checkinapp.delivery.navigation.HomeScreenGraphScreen
 import com.jmendozat13.checkinapp.delivery.navigation.LoadingScreenGraphScreen
 import com.jmendozat13.checkinapp.delivery.navigation.LoginScreenGraphScreen

@@ -42,8 +42,8 @@ fun NavigationWrapper(
         }
 
         composable<SignupScreenGraphScreen> {
-            SignupScreen {
-                navController.navigate(HomeScreenGraphScreen) {
+            SignupScreen { destination ->
+                navController.navigate(destination) {
                     popUpTo<SignupScreenGraphScreen> { inclusive = true }
                     launchSingleTop = true
                 }
