@@ -18,11 +18,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jmendozat13.checkinapp.delivery.navigation.ScreenNavigationGraph
-import com.jmendozat13.checkinapp.delivery.theme.CheckInAppTheme
 import com.jmendozat13.checkinapp.delivery.theme.Header01_Bold
 import com.jmendozat13.checkinapp.delivery.theme.Paragraph01_SemiBold
 import com.jmendozat13.checkinapp.delivery.viewmodels.UserAccountViewModel
@@ -88,16 +86,14 @@ fun SignupScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             CustomButtonPrimary(title = "Registrar") {
-                userAccountViewModel.sendRegisterUserAccount(
+                userAccountViewModel.onRegister(
                     name = names,
                     email = email,
                     phoneNumber = phoneNumber
                 )
             }
             Spacer(modifier = Modifier.height(12.dp))
-            CustomButtonPrimaryOutline {
-
-            }
+            CustomButtonPrimaryOutline { userAccountViewModel.onLogin() }
             Spacer(modifier = Modifier.height(24.dp))
             CustomSocialButtons(title = "o ingresa con", onClickGoogle = {}, onClickFacebook = {})
         }
@@ -105,16 +101,5 @@ fun SignupScreen(
 
     LaunchedEffect(Unit) {
         userAccountViewModel.navigation.collectLatest { navigateTo(it) }
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewSignupScreen() {
-    CheckInAppTheme {
-        SignupScreen {
-
-        }
     }
 }

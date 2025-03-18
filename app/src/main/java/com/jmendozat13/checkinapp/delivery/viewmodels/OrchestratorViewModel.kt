@@ -47,17 +47,4 @@ class OrchestratorViewModel @Inject constructor(private val localDataStore: Loca
         }
     }
 
-
-    fun onShowOnboarding() {
-        viewModelScope.launch(Dispatchers.Main) {
-            localDataStore.setShowOnboarding()
-        }
-    }
-
-    fun onUserLogin() {
-        viewModelScope.launch(Dispatchers.Main) {
-            localDataStore.setUserLogin()
-        }
-    }
-
 }

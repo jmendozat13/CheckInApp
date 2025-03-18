@@ -1,7 +1,7 @@
 package com.jmendozat13.checkinapp.delivery.views.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +14,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,21 +22,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.jmendozat13.checkinapp.R
-import com.jmendozat13.checkinapp.delivery.theme.CheckInAppTheme
+import com.jmendozat13.checkinapp.delivery.navigation.ScreenNavigationGraph
 import com.jmendozat13.checkinapp.delivery.theme.Header04_Bold
 import com.jmendozat13.checkinapp.delivery.theme.Header05
 import com.jmendozat13.checkinapp.delivery.theme.Header05_Bold
 import com.jmendozat13.checkinapp.delivery.theme.Light01
 import com.jmendozat13.checkinapp.delivery.theme.Paragraph01
+import com.jmendozat13.checkinapp.delivery.viewmodels.LoginViewModel
 import com.jmendozat13.checkinapp.delivery.views.components.CustomButtonPrimary
 import com.jmendozat13.checkinapp.delivery.views.components.CustomSocialButtons
 import com.jmendozat13.checkinapp.delivery.views.components.CustomTextField
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun LoginScreen(navigate: () -> Unit) {
+fun LoginScreen(
+    loginViewModel: LoginViewModel = hiltViewModel(),
+    navigateTo: (ScreenNavigationGraph) -> Unit
+) {
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -43,8 +49,10 @@ fun LoginScreen(navigate: () -> Unit) {
                 .fillMaxSize()
         ) {
             LoginHead(modifier = Modifier.weight(1f))
-            LoginContent(navigate = navigate)
-
+            LoginContent(loginViewModel = loginViewModel)
+        }
+        LaunchedEffect(Unit) {
+            loginViewModel.navigation.collectLatest { navigateTo(it) }
         }
     }
 }
@@ -63,7 +71,10 @@ fun LoginHead(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun LoginContent(modifier: Modifier = Modifier, navigate: () -> Unit) {
+fun LoginContent(
+    modifier: Modifier = Modifier,
+    loginViewModel: LoginViewModel
+) {
     Card(
         modifier = modifier.padding(12.dp),
         colors = CardDefaults.cardColors(containerColor = Light01)
@@ -94,9 +105,13 @@ fun LoginContent(modifier: Modifier = Modifier, navigate: () -> Unit) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CustomButtonPrimary(title = "Ingresar") {
-                    navigate()
+                    loginViewModel.onLogin(identifier)
                 }
-                Text("¿Has olvidado tu identificador?", style = Paragraph01)
+                Text(
+                    modifier = Modifier.clickable { loginViewModel.onResetIdentifier() },
+                    text = "¿Has olvidado tu identificador?",
+                    style = Paragraph01
+                )
             }
 
             CustomSocialButtons(title = "o ingresa con", onClickGoogle = {}, onClickFacebook = {})
@@ -109,20 +124,12 @@ fun LoginContent(modifier: Modifier = Modifier, navigate: () -> Unit) {
                 )
             ) {
                 Text("¿No tienes una cuenta?", style = Header05)
-                Text("SIGN UP", style = Header05_Bold)
+                Text(
+                    modifier = Modifier.clickable { loginViewModel.onSignUp() },
+                    text = "SIGN UP",
+                    style = Header05_Bold
+                )
             }
-
-        }
-    }
-
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewLoginScreen() {
-    CheckInAppTheme {
-        LoginScreen {
 
         }
     }

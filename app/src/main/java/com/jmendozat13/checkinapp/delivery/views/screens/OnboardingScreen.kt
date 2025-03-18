@@ -16,25 +16,29 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.jmendozat13.checkinapp.R
 import com.jmendozat13.checkinapp.delivery.navigation.ScreenNavigationGraph
-import com.jmendozat13.checkinapp.delivery.navigation.SignupScreenGraphScreen
 import com.jmendozat13.checkinapp.delivery.theme.BlueGray900
-import com.jmendozat13.checkinapp.delivery.theme.CheckInAppTheme
 import com.jmendozat13.checkinapp.delivery.theme.Light01
 import com.jmendozat13.checkinapp.delivery.theme.Orange700
+import com.jmendozat13.checkinapp.delivery.viewmodels.OnboardingViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun OnboardingScreen(navigateTo: (ScreenNavigationGraph) -> Unit) {
+fun OnboardingScreen(
+    onboardingViewModel: OnboardingViewModel = hiltViewModel(),
+    navigateTo: (ScreenNavigationGraph) -> Unit
+) {
 
     Column(
         modifier = Modifier
@@ -112,9 +116,7 @@ fun OnboardingScreen(navigateTo: (ScreenNavigationGraph) -> Unit) {
                 horizontal = 16.dp,
                 vertical = 16.dp
             ),
-            onClick = {
-                navigateTo(SignupScreenGraphScreen)
-            }
+            onClick = { onboardingViewModel.onContinue() }
         ) {
             Text(
                 modifier = Modifier
@@ -130,14 +132,10 @@ fun OnboardingScreen(navigateTo: (ScreenNavigationGraph) -> Unit) {
         }
     }
 
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewOnboardingScreen() {
-    CheckInAppTheme {
-        OnboardingScreen {
-
+    LaunchedEffect(Unit) {
+        onboardingViewModel.navigation.collectLatest {
+            navigateTo(it)
         }
     }
+
 }

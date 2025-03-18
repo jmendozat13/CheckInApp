@@ -1,12 +1,9 @@
 package com.jmendozat13.checkinapp.delivery.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.jmendozat13.checkinapp.delivery.viewmodels.OrchestratorViewModel
 import com.jmendozat13.checkinapp.delivery.views.screens.HomeScreen
 import com.jmendozat13.checkinapp.delivery.views.screens.LoadingScreen
 import com.jmendozat13.checkinapp.delivery.views.screens.LoginScreen
@@ -17,14 +14,11 @@ import com.jmendozat13.checkinapp.delivery.views.screens.SignupScreen
 @Composable
 fun NavigationWrapper(
     navController: NavHostController,
-    orchestratorViewModel: OrchestratorViewModel
+    startDestination: ScreenNavigationGraph
 ) {
-    val startDestinationState by orchestratorViewModel.navigationState.collectAsState()
-
-    NavHost(navController = navController, startDestination = startDestinationState) {
+    NavHost(navController = navController, startDestination = startDestination) {
         composable<OnboardingScreenGraphScreen> {
             OnboardingScreen(navigateTo = {
-                orchestratorViewModel.onShowOnboarding()
                 navController.navigate(it) {
                     popUpTo<OnboardingScreenGraphScreen> { inclusive = true }
                 }
@@ -32,21 +26,34 @@ fun NavigationWrapper(
         }
 
         composable<LoginScreenGraphScreen> {
-            LoginScreen {
-                navController.navigate(HomeScreenGraphScreen) {
-                    orchestratorViewModel.onUserLogin()
-                    popUpTo<LoginScreenGraphScreen> { inclusive = true }
-                    launchSingleTop = true
+            LoginScreen { destination ->
+                when (destination) {
+                    is HomeScreenGraphScreen, SignupScreenGraphScreen -> {
+                        navController.navigate(destination) {
+                            popUpTo<LoginScreenGraphScreen> { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    }
+
+                    else ->
+                        navController.navigate(destination)
                 }
             }
         }
 
         composable<SignupScreenGraphScreen> {
             SignupScreen { destination ->
-                navController.navigate(destination) {
-                    popUpTo<SignupScreenGraphScreen> { inclusive = true }
-                    launchSingleTop = true
+                when (destination) {
+                    is HomeScreenGraphScreen, LoginScreenGraphScreen -> {
+                        navController.navigate(destination) {
+                            popUpTo<SignupScreenGraphScreen> { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    }
+
+                    else -> navController.navigate(destination)
                 }
+
             }
         }
         composable<HomeScreenGraphScreen> {
