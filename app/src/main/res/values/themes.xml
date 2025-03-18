@@ -3,7 +3,7 @@
 
     <style name="Theme.CheckInAppSplashScreen" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/gray_100</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_scan_logo</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_scan_splash_logo</item>
         <item name="postSplashScreenTheme">@style/Theme.CheckInApp</item>
     </style>
 
