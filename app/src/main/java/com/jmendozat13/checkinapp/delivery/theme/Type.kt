@@ -65,6 +65,14 @@ val Header05_Bold = TextStyle(
     lineHeight = 16.sp * 1f
 )
 
+val Header05_SemiBold = TextStyle(
+    letterSpacing = 1.sp,
+    color = Orange700,
+    fontSize = 16.sp,
+    fontWeight = FontWeight.SemiBold,
+    lineHeight = 16.sp * 1f
+)
+
 val Paragraph01_SemiBold = TextStyle(
     color = BlueGray900,
     fontSize = 14.sp,

@@ -63,7 +63,9 @@ fun NavigationWrapper(
             LoadingScreen()
         }
         composable<ResetIdentifierGraphScreen> {
-            ResetIdentifierScreen()
+            ResetIdentifierScreen(onBack = {
+                navController.popBackStack()
+            })
         }
     }
 }

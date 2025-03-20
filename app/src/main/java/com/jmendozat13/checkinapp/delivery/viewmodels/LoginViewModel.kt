@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val localDataStore: LocalDataStore) :
-    BaseNavigationViewModel() {
+    BaseViewModel() {
         
     fun onLogin(identifier: String) {
         viewModelScope.launch(Dispatchers.Main) {

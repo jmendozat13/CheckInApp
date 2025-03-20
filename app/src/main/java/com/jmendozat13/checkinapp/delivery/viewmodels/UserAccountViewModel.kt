@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserAccountViewModel @Inject constructor(private val registerUserAccount: RegisterUserAccount) :
-    BaseNavigationViewModel() {
+    BaseViewModel() {
 
 
     fun onRegister(name: String, email: String, phoneNumber: String) {
